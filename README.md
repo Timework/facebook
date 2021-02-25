@@ -1,24 +1,8 @@
-# README
+This is a project for the Odin Project's Final Project in the Ruby on Rails course,
+instructions can be found here: https://www.theodinproject.com/courses/ruby-on-rails/lessons/final-project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+References
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Learned how to create a friendship relationship from here:
+https://hackernoon.com/how-to-create-a-friendship-relation-on-rails-c01d3u4v
