@@ -4,6 +4,17 @@
     <% @users.each do |user| %>
         <li>
             <%= user.email %>
+            <% if !Invitation.reacted?(current_user.id, user.id) %>
+                <%= render partial: "friend", locals: {user: user} %>
+            <% end %>
+        </li>
+    <% end %>
+</ul>
+<h1>Friends</h1>
+<ul>
+    <% @friends.each do |friend| %>
+        <li>
+            <%= friend.email %>
         </li>
     <% end %>
 </ul>

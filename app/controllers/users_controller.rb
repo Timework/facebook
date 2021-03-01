@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user!
     def index
-        @users = User.all
+        @users = User.all.filter { |i| i if i.id != current_user.id}
+        @friends = current_user.friends
     end
 end

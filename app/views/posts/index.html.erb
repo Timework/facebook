@@ -1,0 +1,7 @@
+<h1>Timeline</h1>
+
+<ul>
+    <% @posts.each do |post| %>
+        <%= link_to "#{post.title} made by #{post.user.email}", post_path(post) %>
+    <% end %>
+</ul>

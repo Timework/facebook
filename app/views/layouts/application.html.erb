@@ -19,11 +19,36 @@
         <% end %>
         <% if user_signed_in? %>
           <p>
-            <%= link_to current_user.name, edit_user_registration_path %>
+            <%= link_to current_user.email, edit_user_registration_path %>
           </p>
           <p>
             <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
           </p>
+          <p>
+            <%= link_to "All Users", users_path %>
+          </p>
+          <p>
+            <%= link_to "All Posts", posts_path %>
+          </p>
+          <p>
+            <%= link_to "New Post", new_post_path %>
+          </p>
+          <% current_user.pending_invitations.each do |invite| %>
+            <% if invite.user_id == current_user.id %>
+              <% user = User.find(invite.friend_id) %>
+            <% else %>
+              <% user = User.find(invite.user_id) %>
+            <% end %>
+            <%= user.email %>
+            <%= form_with(url: invitations_path, method: :patch) do |f| %>
+              <%= f.hidden_field :invitation_id, value:invite.id %>
+              <%= f.submit "Accept Friend Request" %>
+            <% end %>
+            <%= form_with(url: invitations_path, method: :delete) do |f| %>
+              <%= f.hidden_field :invitation_id, value:invite.id %>
+              <%= f.submit "Decline Friend Request" %>
+            <% end %>
+          <% end %>
         <% else %>
         <p>
             <%= link_to "Sign In", new_user_session_path %>
