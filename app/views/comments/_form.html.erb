@@ -1,0 +1,11 @@
+<h3>Post a Comment</h3>
+
+<%= form_with(url: post_comments_path(@post), method: :post) do |f| %>
+<p>
+<%= f.label :body, "Comment Here" %>
+<%= f.text_area :body%>
+</p>
+<p>
+<%= f.submit 'Post Comment'%>
+</p>
+<% end %>

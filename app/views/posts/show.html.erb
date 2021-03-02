@@ -12,3 +12,6 @@
     <%= link_to "delete", post_path(@post), method: :delete %>
     <%= link_to "edit", edit_post_path(@post) %>
 <% end %>
+
+<%= render partial: 'comments/comment', collection: @post.comments %>
+<%= render partial: 'comments/form' %>
