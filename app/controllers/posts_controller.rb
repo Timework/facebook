@@ -23,7 +23,7 @@ class PostsController < ApplicationController
             @post.destroy
             flash.notice = "Post '#{@post.title}' Deleted!"
         else
-            flash.notice = "You are not the owner of this post!"
+            flash.notice = "You Are Not The Owner Of This Post!"
         end
         redirect_to action: "index"
     end

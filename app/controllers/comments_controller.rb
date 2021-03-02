@@ -5,6 +5,8 @@ class CommentsController < ApplicationController
         @comment.user_id = current_user.id
 
         @comment.save
+        
+        flash.notice = "Comment Posted!"
 
         redirect_to post_path(@comment.post)
     end

@@ -4,6 +4,7 @@ class ProfilesController < ApplicationController
 
         if @profile.save
             redirect_to user_path(@profile.user)
+            flash.notice = "Profile Created!"
         else
             render 'users/new'
         end
@@ -14,6 +15,7 @@ class ProfilesController < ApplicationController
         @profile = @user.profile
         if @profile.update(profile_params)
             redirect_to user_path(@profile.user)
+            flash.notice = "Profile Edited!"
         else
             render 'users/edit'
         end
