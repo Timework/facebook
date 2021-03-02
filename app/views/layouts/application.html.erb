@@ -33,6 +33,11 @@
           <p>
             <%= link_to "New Post", new_post_path %>
           </p>
+          <% if current_user.profile %>
+            <%= link_to "Edit Profile", edit_user_path(current_user) %>
+          <% else %>
+            <%= link_to "Make Profile", new_user_path %>
+          <% end %>
           <% current_user.pending_invitations.each do |invite| %>
             <% if invite.user_id == current_user.id %>
               <% user = User.find(invite.friend_id) %>

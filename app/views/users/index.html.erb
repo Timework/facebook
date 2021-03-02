@@ -3,18 +3,15 @@
 <ul>
     <% @users.each do |user| %>
         <li>
-            <%= user.email %>
+            <% if user.profile %>
+                <% name = user.profile.name %>
+            <% else %>
+                <% name = user.email %>
+            <% end %>
+            <%= link_to name, user_path(user) %>
             <% if !Invitation.reacted?(current_user.id, user.id) %>
                 <%= render partial: "friend", locals: {user: user} %>
             <% end %>
-        </li>
-    <% end %>
-</ul>
-<h1>Friends</h1>
-<ul>
-    <% @friends.each do |friend| %>
-        <li>
-            <%= friend.email %>
         </li>
     <% end %>
 </ul>

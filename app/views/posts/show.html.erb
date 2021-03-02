@@ -1,5 +1,10 @@
 <h1><%= @post.title %></h1>
-<h2>Made By <%= @post.user.email %></h2>
+<% if @post.user.profile %>
+    <% name = @post.user.profile.name %>
+<% else %>
+    <% name = @post.user.email %>
+<% end %>
+<h2>Made By <%= name %></h2>
 <p><%= @post.body %></p>
 <% pre_like = @post.likes.find { |like| like.user_id == current_user.id} %>
 <% if pre_like %>

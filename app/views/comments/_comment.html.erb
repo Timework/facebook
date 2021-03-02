@@ -1,5 +1,10 @@
 <div>
-<h4>Comment by <%= comment.user.email %></h4>
+<% if comment.user.profile %>
+    <% commentuser = comment.user.profile.name %>
+<% else %>
+    <% commentuser = comment.user.email %>
+<% end %>
+<h4>Comment by <%= commentuser %></h4>
 <p><%= comment.body %></p>
 <p>Posted <%= distance_of_time_in_words(comment.post.created_at, comment.created_at) %> later</p>
 </div>

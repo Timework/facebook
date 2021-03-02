@@ -1,0 +1,33 @@
+<% if @profile %>
+<% if @profile.image.attached? %>
+<%= image_tag(@profile.image)%>
+<% end %>
+<% if @profile.name %>
+<p>Name: <%= @profile.name %></p>
+<% end %>
+<% end %>
+<p>Email: <%= @user.email %></p>
+<% if @profile %>
+<% if @profile.about %>
+<p>About: <%= @profile.about %></p>
+<% end %>
+<% end %>
+<h3>Friends</h3>
+<ul>
+    <% @friends.each do |friend| %>
+        <li>
+            <% if friend.profile %>
+                <%= friend.profile.name %>
+            <% else %>
+                <%= friend.email %>
+            <% end %>
+        </li>
+    <% end %>
+</ul>
+<h3>Posts</h3>
+<% @posts.each do |post| %>
+<li>
+<%= link_to "#{post.title}", post_path(post) %>
+</li>
+<% end %>
+</ul>

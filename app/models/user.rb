@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :invitations, dependent: :destroy
   has_many :likes, dependent: :destroy
+  has_one :profile, dependent: :destroy
   has_many :pending_invitations, -> { where confirmed: false }, class_name: 'Invitation', foreign_key: "friend_id", dependent: :destroy
 
   def friends
