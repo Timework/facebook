@@ -1,33 +1,146 @@
+<div class="container post-form-width">
 <% if @profile %>
-<% if @profile.image.attached? %>
-<%= image_tag(@profile.image)%>
+    <% if @profile.image.attached? %>
+        <div class="thumbnail body-background">
+        <%= image_tag(@profile.image) %>
+        </div>
+    <% else %> 
+        <div class="thumbnail body-background">
+            <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png" >
+        </div>
+    <% end %>
+    <h3>Name: <%= @profile.name %></h3>
 <% end %>
-<% if @profile.name %>
-<p>Name: <%= @profile.name %></p>
-<% end %>
-<% end %>
-<p>Email: <%= @user.email %></p>
+<h3>Email: <%= @user.email %></h3>
 <% if @profile %>
-<% if @profile.about %>
-<p>About: <%= @profile.about %></p>
+    <% if @profile.about %>
+        <div class="margin-bottom">About: <%= @profile.about %></div>
+    <% end %>
 <% end %>
+<% if current_user != @user %>
+    <% if !Invitation.reacted?(current_user.id, @user.id) %>
+                <%= render partial: "friend", locals: {user: @user} %>
+    <% end %>
+<% end %>
+<% if current_user == @user %>
+    <% if @profile %>
+        <p>
+            <%= link_to "Edit Profile", edit_user_path(current_user), class:"btn btn-default" %>
+        </p>
+    <% else %>
+        <p>
+            <%= link_to "Make Profile", new_user_path, class:"btn btn-default" %>
+        </p>
+    <% end %>
+<%= link_to "Edit Log In Information", edit_user_registration_path, class:"btn btn-default margin-bottom" %>
 <% end %>
 <h3>Friends</h3>
-<ul>
-    <% @friends.each do |friend| %>
-        <li>
+    <% if @friends.any? %>
+        <div class="row">
+        <% @friends.each do |friend| %>
+            <div class="col col-md-3 col-sm-4 col-xs-6">
             <% if friend.profile %>
-                <%= friend.profile.name %>
+                <% name = friend.profile.name %>
             <% else %>
-                <%= friend.email %>
+                <% name = friend.email %>
             <% end %>
-        </li>
-    <% end %>
-</ul>
-<h3>Posts</h3>
-<% @posts.each do |post| %>
-<li>
-<%= link_to "#{post.title}", post_path(post) %>
-</li>
+            <div class="flex baseline margin-bottom">
+            <% if friend.profile %>
+                <% if friend.profile.image.attached? %>
+                    <%= link_to user_path(friend), class:"no-hover" do %> 
+                        <%= image_tag(friend.profile.image, class:"post-image margin-right-small")  %>
+                    <% end %>
+                    <%= link_to user_path(friend) do %> 
+                        <%= name %>
+                    <% end %>
+                 <% else %>
+                    <%= link_to user_path(friend), class:"no-hover" do %> 
+                        <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png" class="post-image margin-right-small" >
+                    <% end %>
+                    <%= link_to user_path(friend) do %> 
+                        <%= name %>
+                    <% end %>
+                <% end %>
+            <% else %>
+                <%= link_to user_path(friend), class:"no-hover" do %> 
+                    <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png" class="post-image margin-right-small" >
+                <% end %>
+                <%= link_to user_path(friend) do %> 
+                    <%= name %>
+                <% end %>
+            <% end %>
+            </div>
+            </div>
+        <% end %>
+        </div>
+<% elsif current_user == @user %>
+    <p>No friends yet, you can find some people at <%= link_to"Find Friends", users_path %></p>
+<% else %>
+    <p>This user has not added any friends yet.</p>
 <% end %>
-</ul>
+<% if current_user == @user %>
+    <% if current_user.pending_invitations.any? %>
+        <h3>Friend Requests</h3>
+            <div class="row">
+                <% current_user.pending_invitations.each do |invite| %>
+                        <% if invite.user_id == current_user.id %>
+                        <% friend = User.find(invite.friend_id) %>
+                        <% else %>
+                        <% friend = User.find(invite.user_id) %>
+                        <% end %>
+                        <div class="col col-md-3 col-sm-4 col-xs-6">
+            <% if friend.profile %>
+                <% name = friend.profile.name %>
+            <% else %>
+                <% name = friend.email %>
+            <% end %>
+            <div class="flex baseline margin-bottom">
+            <% if friend.profile %>
+                <% if friend.profile.image.attached? %>
+                    <%= link_to user_path(friend), class:"no-hover" do %> 
+                        <%= image_tag(friend.profile.image, class:"post-image margin-right-small")  %>
+                    <% end %>
+                    <%= link_to user_path(friend) do %> 
+                        <%= name %>
+                    <% end %>
+                 <% else %>
+                    <%= link_to user_path(friend), class:"no-hover" do %> 
+                        <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png" class="post-image margin-right-small" >
+                    <% end %>
+                    <%= link_to user_path(friend) do %> 
+                        <%= name %>
+                    <% end %>
+                <% end %>
+            <% else %>
+                <%= link_to user_path(friend), class:"no-hover" do %> 
+                    <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png" class="post-image margin-right-small" >
+                <% end %>
+                <%= link_to user_path(friend) do %> 
+                    <%= name %>
+                <% end %>
+            <% end %>
+            </div>
+                        <%= form_with(url: invitations_path, method: :patch) do |f| %>
+                        <%= f.hidden_field :invitation_id, value:invite.id %>
+                        <%= f.submit "Accept Friend Request", class:"btn btn-primary margin-bottom-small" %>
+                        <% end %>
+                        <%= form_with(url: invitations_path, method: :delete) do |f| %>
+                        <%= f.hidden_field :invitation_id, value:invite.id %>
+                        <%= f.submit "Decline Friend Request", class:"btn btn-danger" %>
+                        <% end %>
+                                    </div>
+                <% end %>
+            </div>
+    <% end %>
+<% end %>
+<h3>Posts</h3>
+<% if @posts.any? %>
+    <div>
+        <%= render partial: 'profiles/post', collection: @posts %>
+    </div>
+<% elsif current_user == @user %>
+    <p>No posts yet, you can make a post at <%= link_to"New Post", new_post_path %></p>
+<% else %>
+    <p>This user has not made any posts.</p>
+<% end %>
+</div>

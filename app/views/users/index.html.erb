@@ -1,17 +1,50 @@
+<div class="container post-form-width">
 <h1>All Users</h1>
 
-<ul>
+<div class="row">
     <% @users.each do |user| %>
-        <li>
+        <div class="col col-md-3 col-sm-4 col-xs-6 same-height">
             <% if user.profile %>
                 <% name = user.profile.name %>
             <% else %>
                 <% name = user.email %>
             <% end %>
-            <%= link_to name, user_path(user) %>
+            <div class="flex margin-bottom-small">
+            <% if user.profile %>
+            <% if user.profile.image.attached? %>
+                <%= link_to user_path(user), class:"no-hover" do %> 
+                <%= image_tag(user.profile.image, class:"friend-image margin-right-small")  %>
+                <% end %>
+            <% else %>
+            <%= link_to user_path(user), class:"no-hover" do %>
+                <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png" class="friend-image margin-right-small" >
+                <% end %>
+            <% end %>
+            <% else %>
+                <%= link_to user_path(user), class:"no-hover" do %> 
+                <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png" class="friend-image margin-right-small" >
+                <% end %>
+            <% end %>
+            <%= link_to name, user_path(user), class:"friend-font" %>
+            </div>
             <% if !Invitation.reacted?(current_user.id, user.id) %>
                 <%= render partial: "friend", locals: {user: user} %>
+            <% elsif @recieved.include?(user) %>
+                <% invite = Invitation.find_invitation_false(user.id, current_user.id) %>
+                    <%= form_with(url: invitations_path, method: :patch) do |f| %>
+                    <%= f.hidden_field :invitation_id, value:invite %>
+                    <%= f.submit "Accept Friend Request", class:"btn btn-primary margin-bottom-small" %>
+                    <% end %>
+                    <%= form_with(url: invitations_path, method: :delete) do |f| %>
+                    <%= f.hidden_field :invitation_id, value:invite %>
+                    <%= f.submit "Decline Friend Request", class:"btn btn-danger" %>
+                    <% end %>
+            <% elsif @friends.include?(user) %>
+                <div>Currently Friends</div>
+            <% else %>
+                <div>Sent Friend Request</div>
             <% end %>
-        </li>
+        </div>
     <% end %>
-</ul>
+</div>
+</div>

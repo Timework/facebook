@@ -21,6 +21,10 @@ class ProfilesController < ApplicationController
         end
     end
 
+    def show
+        redirect_to user_path(current_user)
+    end
+
     private
 
     def profile_params

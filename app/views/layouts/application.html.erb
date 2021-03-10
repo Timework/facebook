@@ -1,67 +1,83 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>OdinFacebook</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Fakebook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/793d8924a3.js" crossorigin="anonymous"></script>
+
   </head>
 
   <body>
-        <% if flash[:notice] %>
-          <p><%= notice %></p>
+  <div class="navbar-fixed-top">
+      <nav class="navbar navbar-expand-sm navbar-inverse no-margin">
+        <% if user_signed_in? %>
+        <div class="container-fluid">
+        <div class="navbar-header">
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <%= link_to "Fakebook", posts_path, class:"navbar-brand" %>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="nav navbar-nav navbar-right mr-auto">
+          <li class="nav-item">
+            <%= link_to "Find Friends", users_path, class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Timeline", posts_path, class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "New Post", new_post_path, class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+              <%= link_to "Profile", user_path(current_user), class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class:"nav-link" %>
+          </li>
+        </ul>
+        </div>
+        </div>
+        <% else %>
+        <div class="container-fluid">
+        <div class="navbar-header">
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbarNav2" aria-controls="navbarNav2" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <%= link_to "Fakebook", posts_path, class:"navbar-brand" %>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNav2">
+        <ul class="nav navbar-nav mr-auto navbar-right">
+        <li class="nav-item">
+            <%= link_to "Sign In", new_user_session_path, class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Sign Up", new_user_registration_path, class:"nav-link" %>
+          </li>
+          </ul>
+          </div>
+          </div>
+        <% end %>
+      </nav>
+      <% if flash[:notice] %>
+          <p class="alert alert-info"><%= notice %></p>
         <% end %>
         <% if flash[:alert] %>
-          <p><%= alert %></p>
+          <p class="alert alert-danger"><%= alert %></p>
         <% end %>
-        <% if user_signed_in? %>
-          <p>
-            <%= link_to current_user.email, edit_user_registration_path %>
-          </p>
-          <p>
-            <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
-          </p>
-          <p>
-            <%= link_to "All Users", users_path %>
-          </p>
-          <p>
-            <%= link_to "All Posts", posts_path %>
-          </p>
-          <p>
-            <%= link_to "New Post", new_post_path %>
-          </p>
-          <% if current_user.profile %>
-            <%= link_to "Edit Profile", edit_user_path(current_user) %>
-          <% else %>
-            <%= link_to "Make Profile", new_user_path %>
-          <% end %>
-          <% current_user.pending_invitations.each do |invite| %>
-            <% if invite.user_id == current_user.id %>
-              <% user = User.find(invite.friend_id) %>
-            <% else %>
-              <% user = User.find(invite.user_id) %>
-            <% end %>
-            <%= user.email %>
-            <%= form_with(url: invitations_path, method: :patch) do |f| %>
-              <%= f.hidden_field :invitation_id, value:invite.id %>
-              <%= f.submit "Accept Friend Request" %>
-            <% end %>
-            <%= form_with(url: invitations_path, method: :delete) do |f| %>
-              <%= f.hidden_field :invitation_id, value:invite.id %>
-              <%= f.submit "Decline Friend Request" %>
-            <% end %>
-          <% end %>
-        <% else %>
-        <p>
-            <%= link_to "Sign In", new_user_session_path %>
-          </p>
-          <p>
-            <%= link_to "Sign Up", new_user_registration_path %>
-          </p>
-        <% end %>
+        </div>
     <%= yield %>
   </body>
 </html>

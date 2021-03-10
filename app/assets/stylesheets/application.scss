@@ -1,0 +1,142 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+
+ .collapse.show {
+    visibility: visible;
+  }
+
+  .no-margin {
+      margin: 0 !important;
+  }
+
+  .post-form-width {
+      max-width: 800px;
+  }
+
+  .flex {
+      display: flex;
+      align-items: baseline;
+  }
+
+  .baseline {
+    align-items: baseline;
+  }
+
+  .margin-left-small {
+      margin-left: 10px;
+  }
+
+  body {
+      margin-top: 110px;
+      background: #EEEEEE;
+  }
+
+  .simple-border {
+      margin-top: 25px;
+      border-radius: 25px;
+      padding: 15px;
+      position: relative;
+      background: #CCCCCC;
+    }
+
+    .comment-image {
+        width: 25px;
+        height: 25px;
+    }
+
+    .comment-body {
+        margin: 10px 0px;
+        padding: 5px 10px;
+        background: #DDDDDD;
+        border-radius: 25px;
+        position: relative;
+    }
+
+    .corner-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 15px;
+    }
+
+    .corner-icon-post {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 25px;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .post-image {
+        width: 30px;
+        height: 30px;
+    }
+
+    .no-hover {
+        text-decoration: none !important;
+    }
+
+    .no-hover:hover {
+        text-decoration: none !important;
+    }
+
+    .post-content-image {
+        width: 100%;
+    }
+
+    .like-button {
+        margin-right: 10px;
+    }
+
+    .margin-right {
+        margin-right: 10px;
+    }
+
+    .margin-right-small {
+        margin-right: 5px;
+    }
+
+    .margin-bottom {
+        margin-bottom: 10px;
+    }
+
+    .body-background {
+        background: #EEEEEE;
+        border: none;
+    }
+
+    .margin-bottom-small {
+        margin-bottom: 5px;
+    }
+
+    .same-height {
+        height: 150px;
+    }
+
+    .friend-image {
+        width: 50px;
+        height: 50px;
+    }
+
+    .friend-font {
+        font-size: 18px;
+    }

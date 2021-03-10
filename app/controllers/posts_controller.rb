@@ -7,23 +7,19 @@ class PostsController < ApplicationController
         @post = current_user.posts.build(post_params)
         if @post.save
             flash.notice = "Post '#{@post.title}' Created!"
-            redirect_to post_path(@post)
+            redirect_to action: "index"
         else
             render :new
         end
-    end
-
-    def show
-        @post = Post.find(params[:id])
     end
 
     def destroy
         @post = Post.find(params[:id])
         if current_user == @post.user
             @post.destroy
-            flash.notice = "Post '#{@post.title}' Deleted!"
+            flash.alert = "Post '#{@post.title}' Deleted!"
         else
-            flash.notice = "You Are Not The Owner Of This Post!"
+            flash.alert = "You Are Not The Owner Of This Post!"
         end
         redirect_to action: "index"
     end
@@ -43,26 +39,9 @@ class PostsController < ApplicationController
         @posts = @posts.sort_by(&:created_at).reverse
     end
 
-    def edit
-        @post = Post.find(params[:id])
-    end
-
-    def update
-        @post = Post.find(params[:id])
-        if current_user == @post.user
-            @post.update(post_params)
-
-            flash.notice = "Post '#{@post.title}' Updated!"
-
-            redirect_to post_path(@post)
-        else
-            flash.notice = "You are not the owner of this post!"
-            redirect_to action: "index"
-        end
-    end
 
     private
     def post_params
-        params.require(:post).permit(:title, :body)
+        params.require(:post).permit(:title, :body, :image)
     end
 end

@@ -1,11 +1,10 @@
-<h3>Post a Comment</h3>
 
-<%= form_with(url: post_comments_path(@post), method: :post) do |f| %>
-<p>
+<%= form_with(url: post_comments_path(post), remote: true) do |f| %>
+<div class="form-group">
 <%= f.label :body, "Comment Here" %>
-<%= f.text_area :body%>
-</p>
-<p>
-<%= f.submit 'Post Comment'%>
-</p>
+<%= f.text_area :body, class:"form-control" %>
+</div>
+<div>
+<%= f.submit 'Post Comment', class:"btn btn-info" %>
+</div>
 <% end %>
