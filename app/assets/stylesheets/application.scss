@@ -50,9 +50,9 @@
   .simple-border {
       margin-top: 25px;
       border-radius: 25px;
-      padding: 15px;
+      padding: 25px;
       position: relative;
-      background: #CCCCCC;
+      background: #FFF;
     }
 
     .comment-image {
@@ -62,9 +62,9 @@
 
     .comment-body {
         margin: 10px 0px;
-        padding: 5px 10px;
-        background: #DDDDDD;
-        border-radius: 25px;
+        padding: 5px 15px;
+        background: #efefef;
+        border-radius: 10px;
         position: relative;
     }
 
@@ -139,4 +139,25 @@
 
     .friend-font {
         font-size: 18px;
+    }
+
+    .nav-bar {
+        border-radius: 0 !important;
+    }
+
+    .navbar-inverse .navbar-nav>li>a {
+        font-size: 15px!important;
+    }
+
+    .navbar-brand {
+        color:white!important;
+        font-size:25px!important;
+        font-weight:500!important;
+    }
+
+
+
+    .timeago {
+        font-weight:400; 
+        color:rgb(109, 109, 109)!important;
     }
