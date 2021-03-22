@@ -1,6 +1,17 @@
 This is a project for the Odin Project's Final Project in the Ruby on Rails course,
 instructions can be found here: https://www.theodinproject.com/courses/ruby-on-rails/lessons/final-project
 
+This is a remake of Facebook, with users having the ability to make posts, comment, like and add friends.
+You have to be logged in, in order to use these features. If you would like to test these out without making an account use this log in information.
+
+Log in: tester@tester.com
+Password: tester
+
+Website is hosted on heroku and can be found here: https://radiant-taiga-41408.herokuapp.com/
+
+The Application also uses AWS S3 in order to store images, as well as bootstrap for a simple yet mobile responsive design.
+
+If you encounter any problems using this application please contact: christopher.martinez0510@gmail.com
 
 References
 
